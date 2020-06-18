@@ -1,0 +1,9 @@
+{% if bunk_list %}
+    <ul>
+    {% for bunk in bunk_list %}
+        <li><a href="/bunks/{{ bunk.id }}/">{{ bunk.from_user }} bunked {{ bunk.to_user }}!</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No bunks yet!</p>
+{% endif %}
