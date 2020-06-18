@@ -1,7 +1,8 @@
 {% if bunk_list %}
     <ul>
     {% for bunk in bunk_list %}
-        <li><a href="/bunks/{{ bunk.id }}/">{{ bunk.from_user }} bunked {{ bunk.to_user }}!</a></li>
+        <li>{{ bunk.from_user.user.username }} bunked {{ bunk.to_user.user.username }}!
+            <small>{{ bunk.time_sent }}</small></li>
     {% endfor %}
     </ul>
 {% else %}
