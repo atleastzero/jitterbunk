@@ -1,6 +1,8 @@
-{% if bunk_list %}
+<h1>{{ userProfile.user.username }}'s Bunks</h1>
+
+{% if bunks_with_user %}
     <ul>
-    {% for bunk in bunk_list %}
+    {% for bunk in bunks_with_user %}
         <li>{{ bunk.from_user.user.username }} bunked {{ bunk.to_user.user.username }}!
             <small>{{ bunk.time_sent }}</small></li>
     {% endfor %}

@@ -1,0 +1,12 @@
+<h1>Last 20 Bunks</h1>
+
+{% if bunk_list %}
+    <ul>
+    {% for bunk in bunk_list %}
+        <li>{{ bunk.from_user.user.username }} bunked {{ bunk.to_user.user.username }}!
+            <small>{{ bunk.time_sent }}</small></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No bunks yet!</p>
+{% endif %}
