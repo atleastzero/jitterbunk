@@ -1,6 +1,7 @@
 from django.views import generic
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login
 
 from .models import Bunk, UserProfile
 from .forms import BunkCreateForm
@@ -37,14 +38,12 @@ class CreateBunkView(generic.CreateView):
     def get_success_url(self):
         return reverse('bunk:index')
 
-    # def get(self, request, *args, **kwargs):
-    #     context = {'form': BunkCreateForm()}
-    #     return render(request, 'bunk/create_bunk.html', {})
-
-    # def post(self, request, *args, **kwargs):
-    #     form = BunkCreateForm(request.POST)
-    #     bunks = Bunk.objects.all()
-    #     if form.is_valid():
-    #         bunk = form.save()
-    #         bunk.save()
-    #     return redirect("IndexView", bunks_list = 'bunks')
+def login_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+    else:
+        reverse('bunk:login')
