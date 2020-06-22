@@ -19,27 +19,17 @@ class IndexView(generic.ListView):
         """Return all bunks."""
         return Bunk.objects.order_by('-time_sent')[:20]
 
-# class UserProfileView(generic.DetailView):
-#     model = UserProfile
-#     template_name = 'bunk/user_feed.html'
-#     context_object_name = 'user'
-
-#     def get_context_data(self, **kwargs):
-#         context = super(UserProfileView, self).get_context_data(**kwargs)
-#         bunks_recieved = Bunk.objects.filter(to_user=self.get_object())
-#         bunks_sent = Bunk.objects.filter(from_user=self.get_object())
-#         context["bunks_with_user"] = (bunks_recieved | bunks_sent).order_by('-time_sent')[:20]
-#         return context
-
-# Danielle's Note
-def user_profile_view(request, username):
-    bunks_recieved = Bunk.objects.filter(to_user=self.get_object())
-    bunks_sent = Bunk.objects.filter(from_user=self.get_object())
+def user_profile_view(request, slug):
+    user = UserProfile.objects.get(slug=slug)
+    bunks_recieved = Bunk.objects.filter(to_user=user)
+    bunks_sent = Bunk.objects.filter(from_user=user)
+    all_bunks = bunks_recieved | bunks_sent
     context = {
-        'bunk_with_user' = (bunks_recieved | bunks_sent).order_by('-time_sent')[:20]
+        'user': user,
+        'user_bunks': all_bunks.order_by('-time_sent')[:20]
     }
     return render(request, 'bunk/user_feed.html', context)
-    
+
 class CreateBunkView(generic.CreateView):
     model = Bunk
     fields = "__all__"

@@ -2,9 +2,9 @@
 
 <h1>{{user}}'s Bunks</h1>
 
-{% if bunks_with_user %}
+{% if user_bunks %}
     <ul>
-    {% for bunk in bunks_with_user %}
+    {% for bunk in user_bunks %}
         <li><a href="{% url 'bunk:detail' bunk.from_user %}">{{bunk.from_user.user.username}}</a> bunked <a href="{% url 'bunk:detail' bunk.to_user %}">{{bunk.to_user.user.username}}</a>!
         <small>{{bunk.time_sent}}</small></li>
     {% endfor %}
